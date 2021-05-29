@@ -1,0 +1,169 @@
+.skinny {
+  display: inline-block;
+  width: 215px;
+  padding: 10px 0 10px 15px;
+  font-family: "Open Sans", sans;
+  font-weight: 400;
+  color: #377D6A;
+  background: #efefef;
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  text-indent: 75px;
+  transition: all .3s ease-in-out;
+}
+
+.skinny::-webkit-input-placeholder {
+  color: #efefef;
+  text-indent: 0;
+  font-weight: 300;
+}
+
+.skinny + label {
+  display: inline-block;
+  position: absolute;
+  transform: translateX(0);
+  top: 0;
+  left: 0;
+  padding: 10px 15px;
+  text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
+  transition: all .3s ease-in-out;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  overflow: hidden;
+}
+
+.skinny + label:before, .skinny + label:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .3s ease-in-out;
+}
+
+.skinny + label:before {
+  top: 5px;
+  bottom: 5px;
+  background: #377D6A;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.skinny + label:after {
+  top: 0;
+  bottom: 0;
+  background: #377D6A;
+}
+
+.skinny:focus,
+.skinny:active {
+  color: #377D6A;
+  text-indent: 0;
+  background: #fff;
+}
+
+.skinny:focus::-webkit-input-placeholder,
+.skinny:active::-webkit-input-placeholder {
+  color: #aaa;
+}
+
+.skinny:focus + label,
+.skinny:active + label {
+  transform: translateX(-100%);
+}
+
+.skinny:focus + label:after,
+.skinny:active + label:after {
+  transform: translateX(100%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<label for="" id="marprice" name="mPrice" class="form-control" style="width: 80px;" ></label>
+
+
+ jQuery(document).ready(function(){
+   
+        jQuery('select[name="art"]').on('change',function(){
+        var aId=jQuery(this).val();
+        if(aId){
+        jQuery.ajax({
+         url:'/getkValue/'+aId,
+         type:"GET",
+         dataType:"json",
+         success:function(data)
+         {
+           console.log(data);
+         //  jQuery('label[name="mPrice"]').empty();
+           jQuery.each(data,function(key,value){
+             $('select[name="karrotId"]').append('<option value="'+key+'">'+value+'</option>');
+
+           });
+         }
+       });
+      }
+     });
+    });
+   
+
+          jQuery(document).ready(function(){
+   
+          jQuery('select[name="karrotId"]').on('change',function(){
+            var kId=jQuery(this).val();
+            if(kId){
+              jQuery.ajax({
+                url:'/getMprice/'+kId,
+                type:"GET",
+                dataType:"json",
+                success:function(data)
+                {
+                  console.log(data);
+                //  jQuery('label[name="mPrice"]').empty();
+                  jQuery.each(data,function(key,value){
+                    $('select[name="mPrice"]').append('<option value="'+value+'">'+value+'</option>');
+   
+                  });
+                }
+              });
+             }
+            });
+          
+   
+          jQuery('select[name="karrotId"]').on('change',function(){
+            var kId=jQuery(this).val();
+            if(kId){
+              jQuery.ajax({
+                url:'/getAprice/'+kId,
+                type:"GET",
+                dataType:"json",
+                success:function(data)
+                {
+                  console.log(data);
+                 jQuery('label[name="aPrice"]').empty();
+                  jQuery.each(data,function(key,value){
+                    $('label[name="aPrice"]').append('<label value="'+value+'">'+value+'</label>');
+   
+                  });
+                }
+              });
+            }
+        });
+      });
